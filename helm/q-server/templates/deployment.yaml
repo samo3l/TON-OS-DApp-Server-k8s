@@ -1,0 +1,43 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    io.kompose.service: q-server
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: q-server
+  strategy: {}
+  template:
+    metadata:
+      labels:
+        io.kompose.service: q-server
+    spec:
+      containers:
+      - env:
+        - name: Q_DATABASE_MAX_SOCKETS
+          value: "100"
+        - name: Q_DATABASE_SERVER
+          value: arangodb:8529
+        - name: Q_REQUESTS_MODE
+          value: kafka
+        - name: Q_REQUESTS_SERVER
+          value: kafka:9092
+        - name: Q_REQUESTS_TOPIC
+          value: requests
+        - name: Q_SLOW_DATABASE_MAX_SOCKETS
+          value: "20"
+        - name: Q_SLOW_DATABASE_SERVER
+          value: arangodbni:8529
+        - name: Q_STATSD_SERVER
+          value: statsd:9125
+        - name: VIRTUAL_HOST
+          value: q-server
+        - name: VIRTUAL_PORT
+          value: "4000"
+        image: q-server
+        name: q-server
+        ports:
+        - containerPort: 4000

@@ -1,0 +1,125 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    io.kompose.service: letsencrypt
+  name: letsencrypt
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: letsencrypt
+  template:
+    metadata:
+      labels:
+        io.kompose.service: letsencrypt
+    spec:
+      containers:
+      - image: jrcs/letsencrypt-nginx-proxy-companion:v1.12
+        name: letsencrypt
+#        volumeMounts:
+#        - mountPath: /var/run/docker.sock
+#          name: letsencrypt-claim0
+#          readOnly: true
+#        - mountPath: /etc/nginx/certs
+#          name: proxy-claim1
+#        - mountPath: /tmp/docker.sock
+#          name: proxy-claim0
+#          readOnly: true
+#        - mountPath: /etc/nginx/vhost.d
+#          name: proxy-claim2
+#        - mountPath: /usr/share/nginx/html
+#          name: proxy-claim3
+#        - mountPath: /etc/nginx/conf.d/proxy-settings.conf
+#          name: proxy-claim4
+#        - mountPath: /etc/nginx/htpasswd
+#          name: proxy-claim5
+#      volumes:
+#      - name: letsencrypt-claim0
+#        persistentVolumeClaim:
+#          claimName: letsencrypt-claim0
+#          readOnly: true
+#      - name: proxy-claim1
+#        persistentVolumeClaim:
+#          claimName: proxy-claim1
+#      - name: proxy-claim0
+#        persistentVolumeClaim:
+#          claimName: proxy-claim0
+#          readOnly: true
+#      - name: proxy-claim2
+#        persistentVolumeClaim:
+#          claimName: proxy-claim2
+#      - name: proxy-claim3
+#        persistentVolumeClaim:
+#          claimName: proxy-claim3
+#      - name: proxy-claim4
+#        persistentVolumeClaim:
+#          claimName: proxy-claim4
+#      - name: proxy-claim5
+#        persistentVolumeClaim:
+#          claimName: proxy-claim5
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    com.github.jrcs.letsencrypt_nginx_proxy_companion.nginx_proxy: ""
+  labels:
+    io.kompose.service: proxy
+  name: proxy
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: proxy
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      annotations:
+        com.github.jrcs.letsencrypt_nginx_proxy_companion.nginx_proxy: ""
+      labels:
+        io.kompose.service: proxy
+    spec:
+      containers:
+      - image: jwilder/nginx-proxy:latest
+        name: proxy
+        ports:
+        - containerPort: 80
+        - containerPort: 443
+#        volumeMounts:
+#        - mountPath: /tmp/docker.sock
+#          name: proxy-claim0
+#          readOnly: true
+#        - mountPath: /etc/nginx/certs
+#          name: proxy-claim1
+#        - mountPath: /etc/nginx/vhost.d
+#          name: proxy-claim2
+#        - mountPath: /usr/share/nginx/html
+#          name: proxy-claim3
+#        - mountPath: /etc/nginx/conf.d/proxy-settings.conf
+#          name: proxy-claim4
+#        - mountPath: /etc/nginx/htpasswd
+#          name: proxy-claim5
+#      volumes:
+#      - name: proxy-claim0
+#        persistentVolumeClaim:
+#          claimName: proxy-claim0
+#          readOnly: true
+#      - name: proxy-claim1
+#        persistentVolumeClaim:
+#          claimName: proxy-claim1
+#      - name: proxy-claim2
+#        persistentVolumeClaim:
+#          claimName: proxy-claim2
+#      - name: proxy-claim3
+#        persistentVolumeClaim:
+#          claimName: proxy-claim3
+#      - name: proxy-claim4
+#        persistentVolumeClaim:
+#          claimName: proxy-claim4
+#      - name: proxy-claim5
+#        persistentVolumeClaim:
+#          claimName: proxy-claim5

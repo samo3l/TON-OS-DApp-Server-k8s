@@ -1,0 +1,6 @@
+apiVersion: v2
+name: statsd
+description: A Helm chart for statsd deployment
+type: application
+version: 0.1.0
+appVersion: 0.1.0

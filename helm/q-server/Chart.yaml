@@ -1,0 +1,7 @@
+apiVersion: v2
+name: q-server
+description: A Helm chart for q-server deployment
+type: application
+version: 0.1.0
+appVersion: 0.1.0
+

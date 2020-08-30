@@ -1,0 +1,70 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    io.kompose.service: node
+  name: node
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: node
+  template:
+    metadata:
+      labels:
+        io.kompose.service: node
+    spec:
+      containers:
+      - args:
+        - normal
+        env:
+        - name: ADNL_PORT
+          value: "30303"
+        - name: CONFIGS_PATH
+          value: /ton-node/configs
+        - name: MEM_LIMIT
+          value: 32G
+        - name: MSIG_ENABLE
+        - name: NETWORK_TYPE
+          value: net.ton.dev
+#        - name: SDK_URL
+#        - name: STAKE
+#        - name: STATSD_DOMAIN
+          value: 'statsd:'
+        - name: STATSD_PORT
+          value: "9125"
+        - name: VALIDATOR_NAME
+          value: my_validator
+        image: node
+        name: rnode
+        ports:
+        - containerPort: 30303
+          hostIP: 158.177.130.148
+          protocol: UDP
+        securityContext:
+          capabilities:
+            add:
+            - SYS_PTRACE
+#        volumeMounts:
+#        - mountPath: /ton-node/configs/
+#          name: node-claim0
+#        - mountPath: /ton-node/logs/
+#          name: node-claim1
+#        - mountPath: /ton-node/node_db/
+#          name: DB
+#        - mountPath: /tmp/metrics/
+#          name: node-claim3
+#      volumes:
+#      - name: node-claim0
+#        persistentVolumeClaim:
+#          claimName: node-claim0
+#      - name: node-claim1
+#        persistentVolumeClaim:
+#          claimName: node-claim1
+#      - name: DB
+#        persistentVolumeClaim:
+#          claimName: DB
+#      - name: node-claim3
+#        persistentVolumeClaim:
+#          claimName: node-claim3

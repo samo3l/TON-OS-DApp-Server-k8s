@@ -1,0 +1,152 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: arangodb
+  name: arangodb
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: arangodb
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: arangodb
+    spec:
+      containers:
+      - env:
+        - name: ARANGODB_OVERRIDE_DETECTED_TOTAL_MEMORY
+          value: "343579738368"
+        - name: ARANGONI_SERVICE_SERVICE_HOST
+          value: arangodbni
+        - name: ARANGONI_SERVICE_SERVICE_PORT
+          value: "8529"
+        - name: ARANGO_NO_AUTH
+          value: "1"
+        - name: ARANGO_ROOT_PASSWORD
+          value: iJJ9fWxb9Z6CS1aPagoW
+        - name: ARANGO_SERVICE_SERVICE_HOST
+          value: arangodb
+        - name: ARANGO_SERVICE_SERVICE_PORT
+          value: "8529"
+        - name: INSTANCE_NAME
+          value: first
+        - name: LETSENCRYPT_EMAIL
+          value: senegalelastico@gmail.com
+        - name: LETSENCRYPT_HOST
+          value: baremetal01.fra02.ibm.cloud
+        - name: NETWORK_TYPE
+          value: net.ton.dev
+        - name: VIRTUAL_HOST
+          value: baremetal01.fra02.ibm.cloud
+        - name: VIRTUAL_PORT
+          value: "4000"
+        image: arangodb/arangodb:latest
+        name: arangodb
+        ports:
+        - containerPort: 8529
+        resources:
+          limits:
+            cpu: "1"
+            memory: 1.5Gi
+          requests:
+            cpu: "0.2"
+            memory: 0.5Gi
+#        volumeMounts:
+#        - mountPath: /var/lib/arangodb3
+#          name: db3
+#        - mountPath: /arango/db
+#          name: data
+#        - mountPath: /arango/config
+#          name: arangodb-claim2
+#      restartPolicy: Always
+#      volumes:
+#      - name: db3
+#        persistentVolumeClaim:
+#          claimName: db3
+#      - name: data
+#        persistentVolumeClaim:
+#          claimName: data
+#      - name: arangodb-claim2
+#        persistentVolumeClaim:
+#          claimName: arangodb-claim2
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: arangodbni
+  name: arangodbni
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: arangodbni
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: arangodbni
+    spec:
+      containers:
+      - env:
+        - name: ARANGONI_SERVICE_SERVICE_HOST
+          value: arangodbni
+        - name: ARANGONI_SERVICE_SERVICE_PORT
+          value: "8529"
+        - name: ARANGO_NO_AUTH
+          value: "1"
+        - name: ARANGO_ROOT_PASSWORD
+          value: iJJ9fWxb9Z6CS1aPagoW
+        - name: ARANGO_SERVICE_SERVICE_HOST
+          value: arangodb
+        - name: ARANGO_SERVICE_SERVICE_PORT
+          value: "8529"
+        - name: INSTANCE_NAME
+          value: first
+        - name: LETSENCRYPT_EMAIL
+          value: senegalelastico@gmail.com
+        - name: LETSENCRYPT_HOST
+          value: arangoni.baremetal01.fra02.ibm.cloud
+        - name: NETWORK_TYPE
+          value: net.ton.dev
+        - name: VIRTUAL_HOST
+          value: arangoni.baremetal01.fra02.ibm.cloud
+        - name: VIRTUAL_PORT
+          value: "8529"
+        image: arangodb/arangodb:latest
+        name: arangodbni
+        ports:
+        - containerPort: 8529
+        resources:
+          limits:
+            cpu: "1"
+            memory: 1.5Gi
+          requests:
+            cpu: "0.2"
+            memory: 0.5Gi
+#        volumeMounts:
+#        - mountPath: /var/lib/arangodb3
+#          name: db3ni
+#        - mountPath: /arango/db
+#          name: datani
+#        - mountPath: /arango/config
+#          name: arangodbni-claim2
+#      restartPolicy: Always
+#      serviceAccountName: ""
+#      volumes:
+#      - name: db3ni
+#        persistentVolumeClaim:
+#          claimName: db3ni
+#      - name: datani
+#        persistentVolumeClaim:
+#          claimName: datani
+#      - name: arangodbni-claim2
+#        persistentVolumeClaim:
+#          claimName: arangodbni-claim2

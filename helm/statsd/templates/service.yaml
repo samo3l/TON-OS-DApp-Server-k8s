@@ -1,0 +1,19 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+  labels:
+    io.kompose.service: statsd
+  name: statsd
+spec:
+  ports:
+  - name: "30303"
+    port: 30303
+    targetPort: 9102
+  - name: "9125"
+    port: 9125
+    protocol: UDP
+    targetPort: 9125
+  selector:
+    io.kompose.service: statsd
