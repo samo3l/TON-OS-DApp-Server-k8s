@@ -41,6 +41,7 @@ spec:
         ports:
         - containerPort: 30303
           protocol: UDP
+          hostPort: 30303
         securityContext:
           capabilities:
             add:
