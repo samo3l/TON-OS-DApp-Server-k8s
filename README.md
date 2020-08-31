@@ -1,7 +1,5 @@
 # AWS VPC + EKS + HELM using terraform
 
-Upwork project for Val Spiridonov
-
 ## Getting Started
 
 These instructions will describe how to spin up AWS VPC + EKS + HELM using terraform
