@@ -4,7 +4,7 @@ metadata:
   annotations:
   labels:
     io.kompose.service: q-server
-  name: q-server
+  name: q-server-ton
 spec:
   ports:
   - name: "4000"

@@ -4,12 +4,12 @@ kind: Deployment
 metadata:
   labels:
     io.kompose.service: q-server
+  name: q-server
 spec:
   replicas: 1
   selector:
     matchLabels:
       io.kompose.service: q-server
-  strategy: {}
   template:
     metadata:
       labels:
@@ -24,7 +24,7 @@ spec:
         - name: Q_REQUESTS_MODE
           value: kafka
         - name: Q_REQUESTS_SERVER
-          value: kafka:9092
+          value: kafka-ton:9092
         - name: Q_REQUESTS_TOPIC
           value: requests
         - name: Q_SLOW_DATABASE_MAX_SOCKETS
@@ -34,10 +34,17 @@ spec:
         - name: Q_STATSD_SERVER
           value: statsd:9125
         - name: VIRTUAL_HOST
-          value: q-server
+          value: q-server-ton
         - name: VIRTUAL_PORT
           value: "4000"
-        image: q-server
+        image: senegal/tonlabs-q-server:latest
         name: q-server
+        resources:
+          limits:
+            cpu: "2"
+            memory: 2Gi
+          requests:
+            cpu: "0.3"
+            memory: 0.5Gi
         ports:
         - containerPort: 4000

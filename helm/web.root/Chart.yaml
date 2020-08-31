@@ -1,6 +1,0 @@
-apiVersion: v2
-name: web.root
-description: A Helm chart for web.root deployment
-type: application
-version: 0.1.0
-appVersion: 0.1.0

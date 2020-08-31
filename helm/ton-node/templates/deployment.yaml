@@ -25,27 +25,59 @@ spec:
           value: /ton-node/configs
         - name: MEM_LIMIT
           value: 32G
-        - name: MSIG_ENABLE
         - name: NETWORK_TYPE
           value: net.ton.dev
+#        - name: MSIG_ENABLE
 #        - name: SDK_URL
 #        - name: STAKE
-#        - name: STATSD_DOMAIN
+        - name: STATSD_DOMAIN
           value: 'statsd:'
         - name: STATSD_PORT
           value: "9125"
         - name: VALIDATOR_NAME
           value: my_validator
-        image: node
+        image: senegal/tonlabs-ton-node:latest
         name: rnode
         ports:
         - containerPort: 30303
-          hostIP: 158.177.130.148
           protocol: UDP
         securityContext:
           capabilities:
             add:
             - SYS_PTRACE
+        resources:
+          limits:
+            cpu: "4"
+            memory: 8Gi
+          requests:
+            cpu: "1"
+            memory: 2Gi
+        volumeMounts:
+          - name: config-vol
+            mountPath: /ton-node/configs/config.json
+            subPath: config.json 
+          - name: default-config-vol
+            mountPath: /ton-node/configs/default_config.json
+            subPath: default_config.json
+          - name: log-cfg-vol
+            mountPath: /ton-node/configs/log_cfg.yml
+            subPath: log_cfg.yml
+#          - name: ton-global-vol
+#            mountPath: /ton-node/configs/ton-global.config.json
+#            subPath: ton-global.config.json
+      volumes:
+      - name: config-vol
+        configMap:
+          name: config
+      - name: default-config-vol
+        configMap:
+          name: default-config
+      - name: log-cfg-vol
+        configMap:
+          name: log-cfg
+      - name: ton-global-vol
+        configMap:
+          name: ton-global
 #        volumeMounts:
 #        - mountPath: /ton-node/configs/
 #          name: node-claim0

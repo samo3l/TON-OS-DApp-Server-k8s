@@ -18,9 +18,16 @@ spec:
       containers:
       - env:
         - name: ADVERTISED_LISTENER
-          value: kafka
-        image: check-connect
+          value: kafka-ton
+        image: senegal/tonlabs-kafka-check-connect:latest
         name: check-connect
+        resources:
+          limits:
+            cpu: "1"
+            memory: 1.5Gi
+          requests:
+            cpu: "0.2"
+            memory: 0.5Gi
       restartPolicy: Always
 
 ---
@@ -43,11 +50,11 @@ spec:
       containers:
       - env:
         - name: ADVERTISED_LISTENER
-          value: kafka
+          value: kafka-ton
         - name: CLASSPATH
           value: /usr/share/java/monitoring-interceptors/monitoring-interceptors-5.2.1.jar
         - name: CONNECT_BOOTSTRAP_SERVERS
-          value: kafka:29092
+          value: kafka-ton:29092
         - name: CONNECT_CONFIG_STORAGE_REPLICATION_FACTOR
           value: "1"
         - name: CONNECT_CONFIG_STORAGE_TOPIC
@@ -96,9 +103,15 @@ spec:
           value: zookeeper:2181
         - name: KAFKA_JMX_PORT
           value: "9584"
-        image: confluentinc/cp-kafka-connect:5.3.1
-        imagePullPolicy: ""
+        image: senegal/confluentinc-cp-kafka-connect:5.3.1
         name: connect
+        resources:
+          limits:
+            cpu: "1"
+            memory: 1.5Gi
+          requests:
+            cpu: "0.2"
+            memory: 0.5Gi
 #        volumeMounts:
 #        - mountPath: /usr/share/java/kafka-connect-arangodb
 #          name: connect-claim0
@@ -113,7 +126,7 @@ kind: Deployment
 metadata:
   labels:
     io.kompose.service: kafka
-  name: kafka
+  name: kafka-ton
 spec:
   replicas: 1
   selector:
@@ -127,9 +140,9 @@ spec:
       containers:
       - env:
         - name: ADVERTISED_LISTENER
-          value: kafka
+          value: kafka-ton
         - name: KAFKA_ADVERTISED_LISTENERS
-          value: PLAINTEXT://kafka:29092,PLAINTEXT_HOST://kafka:9092
+          value: PLAINTEXT://kafka-ton:29092,PLAINTEXT_HOST://kafka-ton:9092
         - name: KAFKA_BROKER_ID
           value: "1"
         - name: KAFKA_CLEANUP_POLICY
@@ -161,7 +174,14 @@ spec:
         - name: KAFKA_ZOOKEEPER_CONNECT
           value: zookeeper:2181
         image: confluentinc/cp-kafka:5.3.1
-        name: kafka
+        name: kafka-ton
+        resources:
+          limits:
+            cpu: "1"
+            memory: 1.5Gi
+          requests:
+            cpu: "0.2"
+            memory: 0.5Gi
         ports:
         - containerPort: 9092
 #        volumeMounts:
@@ -178,7 +198,7 @@ kind: Deployment
 metadata:
   labels:
     io.kompose.service: schema-registry
-  name: schema-registry
+  name: schema-registry-ton
 spec:
   replicas: 1
   selector:
@@ -192,7 +212,7 @@ spec:
       containers:
       - env:
         - name: ADVERTISED_LISTENER
-          value: kafka
+          value: kafka-ton
         - name: SCHEMA_REGISTRY_HOST_NAME
           value: schema-registry
         - name: SCHEMA_REGISTRY_JMX_PORT
@@ -200,9 +220,16 @@ spec:
         - name: SCHEMA_REGISTRY_KAFKASTORE_CONNECTION_URL
           value: zookeeper:2181
         image: confluentinc/cp-schema-registry:5.3.1
-        name: schema-registry
+        name: schema-registry-ton
         ports:
         - containerPort: 8081
+        resources:
+          limits:
+            cpu: "1"
+            memory: 1.5Gi
+          requests:
+            cpu: "0.2"
+            memory: 0.5Gi
 #        volumeMounts:
 #        - mountPath: /etc/confluent/docker/launch
 #          name: schema-registry-claim0
@@ -231,10 +258,19 @@ spec:
       containers:
       - env:
         - name: ADVERTISED_LISTENER
-          value: kafka
+          value: kafka-ton
         - name: ZOOKEEPER_CLIENT_PORT
           value: "2181"
         - name: ZOOKEEPER_TICK_TIME
           value: "2000"
         image: confluentinc/cp-zookeeper:5.3.1
         name: zookeeper
+        resources:
+          limits:
+            cpu: "1"
+            memory: 1.5Gi
+          requests:
+            cpu: "0.2"
+            memory: 0.5Gi
+        ports:
+        - containerPort: 2181

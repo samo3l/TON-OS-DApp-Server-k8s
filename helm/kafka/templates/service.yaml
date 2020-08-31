@@ -4,12 +4,15 @@ kind: Service
 metadata:
   labels:
     io.kompose.service: kafka
-  name: kafka
+  name: kafka-ton
 spec:
   ports:
   - name: "9092"
     port: 9092
     targetPort: 9092
+  - name: "29092"
+    port: 29092
+    targetPort: 29092
   selector:
     io.kompose.service: kafka
 
@@ -19,7 +22,7 @@ kind: Service
 metadata:
   labels:
     io.kompose.service: schema-registry
-  name: schema-registry
+  name: schema-registry-ton
 spec:
   ports:
   - name: "8081"
@@ -27,3 +30,18 @@ spec:
     targetPort: 8081
   selector:
     io.kompose.service: schema-registry
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    io.kompose.service: zookeeper
+  name: zookeeper
+spec:
+  ports:
+  - name: "2181"
+    port: 2181
+    targetPort: 2181
+  selector:
+    io.kompose.service: zookeeper

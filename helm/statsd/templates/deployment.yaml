@@ -29,9 +29,23 @@ spec:
         name: statsd
         ports:
         - containerPort: 9102
-          hostIP: 10.194.163.118
         - containerPort: 9125
           protocol: UDP
+        resources:
+          limits:
+            cpu: "1"
+            memory: 1.5Gi
+          requests:
+            cpu: "0.2"
+            memory: 0.5Gi
+        volumeMounts:
+          - name: statsd-mapping-vol
+            mountPath: /statsd-mappings/statsd-mapping.yaml
+            subPath: statsd-mapping.yaml
+      volumes:
+      - name: statsd-mapping-vol
+        configMap:
+          name: statsd-mapping
 #        volumeMounts:
 #        - mountPath: /statsd-mappings/statsd-mapping.yaml
 #          name: statsd-claim0

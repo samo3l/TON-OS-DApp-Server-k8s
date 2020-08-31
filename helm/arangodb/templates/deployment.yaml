@@ -36,16 +36,16 @@ spec:
         - name: INSTANCE_NAME
           value: first
         - name: LETSENCRYPT_EMAIL
-          value: senegalelastico@gmail.com
+          value: test@gmail.com
         - name: LETSENCRYPT_HOST
-          value: baremetal01.fra02.ibm.cloud
+          value: test.com
         - name: NETWORK_TYPE
           value: net.ton.dev
         - name: VIRTUAL_HOST
-          value: baremetal01.fra02.ibm.cloud
+          value: test.com
         - name: VIRTUAL_PORT
           value: "4000"
-        image: arangodb/arangodb:latest
+        image: senegal/tonlabs-arango:latest
         name: arangodb
         ports:
         - containerPort: 8529
@@ -56,6 +56,14 @@ spec:
           requests:
             cpu: "0.2"
             memory: 0.5Gi
+        volumeMounts:
+          - name: arango-config-vol
+            mountPath: /arango/config
+            subPath: arango-config
+      volumes:
+      - name: arango-config-vol
+        configMap:
+          name: arango-config
 #        volumeMounts:
 #        - mountPath: /var/lib/arangodb3
 #          name: db3
@@ -111,16 +119,16 @@ spec:
         - name: INSTANCE_NAME
           value: first
         - name: LETSENCRYPT_EMAIL
-          value: senegalelastico@gmail.com
+          value: test@gmail.com
         - name: LETSENCRYPT_HOST
-          value: arangoni.baremetal01.fra02.ibm.cloud
+          value: arangoni.test.com
         - name: NETWORK_TYPE
           value: net.ton.dev
         - name: VIRTUAL_HOST
-          value: arangoni.baremetal01.fra02.ibm.cloud
+          value: arangoni.test.com
         - name: VIRTUAL_PORT
           value: "8529"
-        image: arangodb/arangodb:latest
+        image: senegal/tonlabs-arango:latest
         name: arangodbni
         ports:
         - containerPort: 8529
@@ -131,6 +139,14 @@ spec:
           requests:
             cpu: "0.2"
             memory: 0.5Gi
+        volumeMounts:
+          - name: arangoni-config-vol
+            mountPath: /arango/config
+            subPath: arangoni-config
+      volumes:
+      - name: arangoni-config-vol
+        configMap:
+          name: arangoni-config
 #        volumeMounts:
 #        - mountPath: /var/lib/arangodb3
 #          name: db3ni
