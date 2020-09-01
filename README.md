@@ -102,8 +102,11 @@ cd helm_
 └── terraform-vpc-eks
 
 Build directory contains all the required code and Dockerfiles to build Docker images for TON OS DApp Server which will be used in Helm charts for deployment.
+
 Helm is a package manager for Kubernetes. Helm directory contains all the deploy scripts, configs and variables to deploy TON OS DApp Server on Kubernetes.
+
 Terraform-vpc-eks directory contains Terraform scripts to deploy VPC and EKS (Kubernetes cluster) on AWS. 
+
 **NOTE**: You may use any other tool, cloud or even bare metal server for Kubernetes setup. Helm charts will still work.
 
 
