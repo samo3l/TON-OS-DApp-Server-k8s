@@ -56,21 +56,15 @@ Repository contains Dockerfiles, Terraform scripts and deployment scripts to set
 
 1. Run Dapp server node
 ```
- 	cd helm
-```
-
-```
- 	./node_install.sh &lt;kubernetes_namespace>
+cd helm
+./node_install.sh &lt;kubernetes_namespace>
 ```
 
 
 2. Stop Dapp server node
 ```
-    _cd helm_
-```
-
-```
-    _./node_uninstall &lt;kubernetes_namespace>_
+cd helm_
+./node_uninstall &lt;kubernetes_namespace>_
 ```
 
 
@@ -107,12 +101,9 @@ Repository contains Dockerfiles, Terraform scripts and deployment scripts to set
 
 └── terraform-vpc-eks
 
-**Build** directory contains all the required code and Dockerfiles to build Docker images for TON OS DApp Server which will be used in Helm charts for deployment.
-
-**Helm** is a package manager for Kubernetes. Helm directory contains all the deploy scripts, configs and variables to deploy TON OS DApp Server on Kubernetes.
-
-**Terraform-vpc-eks** directory contains Terraform scripts to deploy VPC and EKS (Kubernetes cluster) on AWS. 
-
+Build directory contains all the required code and Dockerfiles to build Docker images for TON OS DApp Server which will be used in Helm charts for deployment.
+Helm is a package manager for Kubernetes. Helm directory contains all the deploy scripts, configs and variables to deploy TON OS DApp Server on Kubernetes.
+Terraform-vpc-eks directory contains Terraform scripts to deploy VPC and EKS (Kubernetes cluster) on AWS. 
 **NOTE**: You may use any other tool, cloud or even bare metal server for Kubernetes setup. Helm charts will still work.
 
 
@@ -120,14 +111,15 @@ Repository contains Dockerfiles, Terraform scripts and deployment scripts to set
 
 To customize variables for TON OS DApp Server components, just open helm/charts/_&lt;component_name>_/variables.yaml. 
 
-**NOTE: Default values **also can be found there**.**
+**NOTE**: Default values also can be found there.
 
+### List of variables
 
 <table>
   <tr>
    <td><strong>Parameter</strong>
    </td>
-   <td>Description
+   <td><strong>Description</strong>
    </td>
    <td><strong>Default</strong>
    </td>
@@ -970,13 +962,9 @@ Variables are described in the variables.tf file. But input values for those var
 
 1. Export credentials variables
 ```
-    export AWS_ACCESS_KEY_ID="anaccesskey"
-
-
-    export AWS_SECRET_ACCESS_KEY="asecretkey"
-
-
-    export AWS_DEFAULT_REGION="us-west-2"
+export AWS_ACCESS_KEY_ID="anaccesskey"
+export AWS_SECRET_ACCESS_KEY="asecretkey"
+export AWS_DEFAULT_REGION="us-west-2"
 ```
 2. Navigate to project dir
 ```
