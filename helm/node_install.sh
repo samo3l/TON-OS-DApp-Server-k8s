@@ -7,7 +7,7 @@ for chart in {"arangodb","kafka","q-server","statsd","ton-node"}; do
   echo "=================================="
 done
 
-#helm repo add stable https://kubernetes-charts.storage.googleapis.com
+helm repo add stable https://kubernetes-charts.storage.googleapis.com
 
-#helm install -n $1 grafana stable/grafana
-#helm install -n $1 graylog stable/graylog
+helm install -n $1 grafana stable/grafana
+helm install -n $1 graylog stable/graylog
