@@ -1,27 +1,5 @@
 <!-- Copy and paste the converted output. -->
 
-<!-----
-NEW: Check the "Suppress top comment" option to remove this info from the output.
-
-Conversion time: 2.155 seconds.
-
-
-Using this Markdown file:
-
-1. Paste this output into your source file.
-2. See the notes and action items below regarding this conversion run.
-3. Check the rendered output (headings, lists, code blocks, tables) for proper
-   formatting and use a linkchecker before you publish this page.
-
-Conversion notes:
-
-* Docs to Markdown version 1.0β29
-* Tue Sep 01 2020 13:55:47 GMT-0700 (PDT)
-* Source doc: TON-OS-DApp-Server-k8s 
-* Tables are currently converted to HTML tables.
------>
-
-
 
 ## Description
 
@@ -59,7 +37,7 @@ Repository contains Dockerfiles, Terraform scripts and deployment scripts to set
 </table>
 
 
-**NOTE: **SSD disks are recommended for the storage.
+**NOTE**: SSD disks are recommended for the storage.
 
 
 ## Prerequisites
@@ -77,20 +55,23 @@ Repository contains Dockerfiles, Terraform scripts and deployment scripts to set
 
 
 1. Run Dapp server node
-
+```
  	cd helm
+```
 
+```
  	./node_install.sh &lt;kubernetes_namespace>
-
+```
 
 
 2. Stop Dapp server node
-
+```
     _cd helm_
+```
 
-
+```
     _./node_uninstall &lt;kubernetes_namespace>_
-
+```
 
 
 ## Project structure & overview
@@ -146,7 +127,7 @@ To customize variables for TON OS DApp Server components, just open helm/charts/
   <tr>
    <td><strong>Parameter</strong>
    </td>
-   <td><strong>Description</strong>
+   <td>Description
    </td>
    <td><strong>Default</strong>
    </td>
@@ -988,7 +969,7 @@ Variables are described in the variables.tf file. But input values for those var
 
 
 1. Export credentials variables
-
+```
     export AWS_ACCESS_KEY_ID="anaccesskey"
 
 
@@ -996,35 +977,35 @@ Variables are described in the variables.tf file. But input values for those var
 
 
     export AWS_DEFAULT_REGION="us-west-2"
-
+```
 2. Navigate to project dir
-
+```
 cd terraform-vpc-eks-helm
-
+```
 
 
 3. Init providers
-
+```
 terraform init
-
+```
 
 
 4. Plan and see resources will be created
-
+```
 terraform plan
-
+```
 
 
 5. Create them
-
+```
 terraform apply
-
+```
 
 
 6. Destroy resources
-
+```
 terraform destroy
-
+```
 
 ## Logging 
 
