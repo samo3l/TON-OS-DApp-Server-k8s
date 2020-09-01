@@ -16,28 +16,12 @@ spec:
         io.kompose.service: node
     spec:
       containers:
-      - args:
-        - normal
-        env:
-        - name: ADNL_PORT
-          value: "30303"
-        - name: CONFIGS_PATH
-          value: /ton-node/configs
-        - name: MEM_LIMIT
-          value: 32G
-        - name: NETWORK_TYPE
-          value: net.ton.dev
-#        - name: MSIG_ENABLE
-#        - name: SDK_URL
-#        - name: STAKE
-        - name: STATSD_DOMAIN
-          value: 'statsd:'
-        - name: STATSD_PORT
-          value: "9125"
-        - name: VALIDATOR_NAME
-          value: my_validator
+      - envFrom:
+        - configMapRef:
+            name: node
         image: senegal/tonlabs-ton-node:latest
         name: rnode
+        args: ['normal']
         ports:
         - containerPort: 30303
           protocol: UDP
@@ -48,8 +32,8 @@ spec:
             - SYS_PTRACE
         resources:
           limits:
-            cpu: "4"
-            memory: 8Gi
+            cpu: "8"
+            memory: 16Gi
           requests:
             cpu: "1"
             memory: 2Gi
@@ -76,28 +60,6 @@ spec:
       - name: log-cfg-vol
         configMap:
           name: log-cfg
-      - name: ton-global-vol
-        configMap:
-          name: ton-global
-#        volumeMounts:
-#        - mountPath: /ton-node/configs/
-#          name: node-claim0
-#        - mountPath: /ton-node/logs/
-#          name: node-claim1
-#        - mountPath: /ton-node/node_db/
-#          name: DB
-#        - mountPath: /tmp/metrics/
-#          name: node-claim3
-#      volumes:
-#      - name: node-claim0
-#        persistentVolumeClaim:
-#          claimName: node-claim0
-#      - name: node-claim1
-#        persistentVolumeClaim:
-#          claimName: node-claim1
-#      - name: DB
-#        persistentVolumeClaim:
-#          claimName: DB
-#      - name: node-claim3
-#        persistentVolumeClaim:
-#          claimName: node-claim3
+#      - name: ton-global-vol
+#        configMap:
+#          name: ton-global

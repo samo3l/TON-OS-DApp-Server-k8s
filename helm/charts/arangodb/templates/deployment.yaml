@@ -1,0 +1,85 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: arangodb
+  name: arangodb
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: arangodb
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: arangodb
+    spec:
+      containers:
+      - envFrom:
+        - configMapRef:
+            name: arangodb
+        image: senegal/tonlabs-arango:latest
+        name: arangodb
+        ports:
+        - containerPort: 8529
+        resources:
+          limits:
+            cpu: "1"
+            memory: 1.5Gi
+          requests:
+            cpu: "0.2"
+            memory: 0.5Gi
+        volumeMounts:
+          - name: arango-config-vol
+            mountPath: /arango/config
+            subPath: arango-config
+      volumes:
+      - name: arango-config-vol
+        configMap:
+          name: arango-config
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: arangodbni
+  name: arangodbni
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: arangodbni
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: arangodbni
+    spec:
+      containers:
+      - envFrom:
+        - configMapRef:
+            name: arangodbni
+        image: senegal/tonlabs-arango:latest
+        name: arangodbni
+        ports:
+        - containerPort: 8529
+        resources:
+          limits:
+            cpu: "1"
+            memory: 1.5Gi
+          requests:
+            cpu: "0.2"
+            memory: 0.5Gi
+        volumeMounts:
+          - name: arangoni-config-vol
+            mountPath: /arango/config
+            subPath: arangoni-config
+      volumes:
+      - name: arangoni-config-vol
+        configMap:
+          name: arangoni-config

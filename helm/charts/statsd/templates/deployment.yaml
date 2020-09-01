@@ -18,13 +18,6 @@ spec:
       containers:
       - args:
         - --statsd.mapping-config=/statsd-mappings/statsd-mapping.yaml
-        env:
-        - name: ARGS
-          value: --statsd.mapping-config=/statsd-mappings/statsd-mapping.yaml
-        - name: TCP_PORT
-          value: "9102"
-        - name: UDP_PORT
-          value: "9125"
         image: prom/statsd-exporter:v0.12.2
         name: statsd
         ports:
@@ -46,10 +39,3 @@ spec:
       - name: statsd-mapping-vol
         configMap:
           name: statsd-mapping
-#        volumeMounts:
-#        - mountPath: /statsd-mappings/statsd-mapping.yaml
-#          name: statsd-claim0
-#      volumes:
-#      - name: statsd-claim0
-#        persistentVolumeClaim:
-#          claimName: statsd-claim0

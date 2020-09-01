@@ -1,5 +1,21 @@
 ---
 apiVersion: v1
+data:
+  {{- toYaml .Values.arangodb | nindent 2 }}
+kind: ConfigMap
+metadata:
+  name: arangodb
+
+---
+apiVersion: v1
+data:
+  {{- toYaml .Values.arangodbni | nindent 2 }}
+kind: ConfigMap
+metadata:
+  name: arangodbni
+
+---
+apiVersion: v1
 kind: ConfigMap
 metadata:
   name: arango-config
