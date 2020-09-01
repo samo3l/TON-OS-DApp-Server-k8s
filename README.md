@@ -57,14 +57,14 @@ Repository contains Dockerfiles, Terraform scripts and deployment scripts to set
 1. Run Dapp server node
 ```
 cd helm
-./node_install.sh &lt;kubernetes_namespace>
+./node_install.sh <kubernetes_namespace>
 ```
 
 
 2. Stop Dapp server node
 ```
-cd helm_
-./node_uninstall &lt;kubernetes_namespace>_
+cd helm
+./node_uninstall <kubernetes_namespace>
 ```
 
 
