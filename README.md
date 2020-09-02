@@ -1011,9 +1011,32 @@ Grafana stable helm chart is included in node_install script and will be install
 
 How to use  - [https://github.com/helm/charts/tree/master/stable/grafana](https://github.com/helm/charts/tree/master/stable/grafana)
 
+## Maintainers
+
+Telegram:
+
+* @renatSK
+* @sostrovskyi
+
+Github:
+
+* @ddzsh
+* @samostrovskyi
+
+Forum.freeton.org:
+* @Gofman
+* @sostrovskyi
+
+Gmail:
+* senegalelastico@gmail.com
+* renatskitsan@gmail.com
+
+
+FreeTON wallet address: 0:06c812287e994efba0640753a4f4bb5ef43e3caba6254cb0ae820ad7663ef815
+
+Feel free to donate some crystals if you like this :)
 
 ## To do
-
 
 
 1. Data persistence volumes for Kubernetes
