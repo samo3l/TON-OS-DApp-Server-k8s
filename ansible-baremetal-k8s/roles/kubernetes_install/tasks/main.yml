@@ -1,0 +1,36 @@
+---
+- name: Prerequsits
+  include_tasks: prereq.yml
+
+- name: Install packages
+  include_tasks: pkg.yml
+
+- name: Install config
+  include_tasks: config.yml
+
+- name: Init first master node
+  include_tasks: master.yml
+  when: 
+    - groups["kube-master"] is defined and (groups["kube-master"]|length>0)
+    - inventory_hostname == groups['kube-master']|first
+
+- name: Install CNI
+  include_tasks: calico.yml
+  when:
+    - groups["kube-master"] is defined and (groups["kube-master"]|length>0)
+    - inventory_hostname == groups['kube-master'] | first
+
+- name: Init secondary master nodes
+  include_tasks: master-secondary.yml
+  when: 
+    - groups["kube-master"] is defined and (groups["kube-master"]|length>0)
+    - inventory_hostname in groups['kube-master'] and inventory_hostname != groups['kube-master'] | first
+
+- name: Join to master 
+  include_tasks: join.yml
+  when: 
+    - groups["kube-node"] is defined and (groups["kube-node"]|length>0)
+    - inventory_hostname not in groups['kube-master'] and inventory_hostname in groups['kube-node']
+
+- name: Reboot node
+  include_tasks: reboot.yml

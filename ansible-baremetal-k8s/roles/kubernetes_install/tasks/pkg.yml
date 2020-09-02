@@ -1,0 +1,32 @@
+---
+- name: Insert/Update configuration block in /etc/yum.repos.d/kubernetes.repo
+  blockinfile:
+    path: /etc/yum.repos.d/kubernetes.repo
+    marker: "### Added by Ansible"
+    create: true
+    block: |
+     [kubernetes]
+     name=Kubernetes
+     baseurl=https://packages.cloud.google.com/yum/repos/kubernetes-el7-x86_64
+     enabled=1
+     gpgcheck=1
+     repo_gpgcheck=1
+     gpgkey=https://packages.cloud.google.com/yum/doc/yum-key.gpg https://packages.cloud.google.com/yum/doc/rpm-package-key.gpg
+
+- name: upgrade all packages
+  yum: name=* state=latest
+
+- name: Unlock all packages
+  command: "yum versionlock delete *"
+  ignore_errors: yes
+
+- name: Install package | yum
+  yum:
+    state: present
+    pkg: "{{ item }}"
+  with_items: ["{{ packages }}"]
+  ignore_errors: yes
+
+- name: Lock kubernetes version
+  command: "yum versionlock {{ item }}"
+  with_items: ["{{ packages_lock }}"]

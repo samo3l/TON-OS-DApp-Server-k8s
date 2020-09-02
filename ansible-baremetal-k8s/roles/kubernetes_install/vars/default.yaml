@@ -1,0 +1,50 @@
+---
+packages:
+  - ipset
+  - ipvsadm
+  - kubectl-{{ kubernetes.version }}
+  - kubelet-{{ kubernetes.version }}
+  - kubeadm-{{ kubernetes.version }}
+  - nfs-utils
+  - device-mapper-persistent-data
+  - lvm2
+  - rpcbind
+  - glibc-devel
+  - yum-plugin-versionlock
+
+modules:
+  - ipip 
+  - br_netfilter
+  - ip_vs
+  - ip_vs_rr
+  - ip_vs_wrr
+  - ip_vs_sh
+  - nf_conntrack_ipv4
+  - ipt_set
+  - ipt_rpfilter
+  - ipt_REJECT
+  - ip_set
+  - ip_tables
+  - nf_conntrack_netlink
+#  - nf_conntrack_proto_sctp
+  - sctp
+  - xt_addrtype
+  - xt_comment
+  - xt_conntrack
+  - xt_ipvs
+  - xt_mark
+  - xt_multiport
+  - xt_sctp
+  - xt_set
+  - xt_u32
+#  - xt_rpfilter
+#  - xt_icmp
+
+packages_lock:
+  - kubectl
+  - kubeadm
+  - kubelet
+  - containerd.io
+  - docker
+  - docker-ce
+  - docker-ce-cli

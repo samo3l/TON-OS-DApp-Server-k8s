@@ -1,0 +1,9 @@
+---
+- name: Template calico manifest
+  template:
+    src: calico.yml.j2
+    dest: /etc/kubernetes/calico.yml
+
+- name: Install calico
+  command: >-
+    kubectl apply --kubeconfig /etc/kubernetes/admin.conf -f /etc/kubernetes/calico.yml

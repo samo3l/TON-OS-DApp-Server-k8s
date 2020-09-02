@@ -1,0 +1,12 @@
+---
+# defaults file for kubernetes_install
+calico:
+  interface: eth0
+#control_plane_endpoint: '' # lb ip in case of multiple masters
+control_plane_port: 6443
+kubernetes:
+  version: 1.18.6
+  serviceSubnet: 10.96.0.0/12
+  podSubnet: 192.168.0.0/16
+#kubeadm_token: ''  # need to set if playbook will add k8s nodes only (to get it please use this bash command on master node: "kubeadm --kubeconfig /etc/kubernetes/admin.conf token create")
+#ca_cert_hash: '84eacc218cb64cbe623306164e2ed4f4c3fa21735510cfa7913c6965b3e2769c' # need to set if playbook will add k8s nodes only (to get it please use this bash command on master node: "openssl x509 -in /etc/kubernetes/pki/ca.crt -pubkey -noout | openssl pkey -pubin -outform DER | openssl dgst -sha256 | cut -d ' ' -f2")

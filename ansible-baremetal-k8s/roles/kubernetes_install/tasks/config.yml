@@ -1,0 +1,14 @@
+---
+- name: Insert/Update configuration block in /var/lib/kubelet/kubeadm-flags.env
+  blockinfile:
+    path: /var/lib/kubelet/kubeadm-flags.env
+    create: true
+    marker: "# Managed by Ansible"
+    block: |
+      KUBELET_KUBEADM_ARGS="--cgroup-driver=systemd --network-plugin=cni --pod-infra-container-image=k8s.gcr.io/pause:3.1 --kube-reserved cpu=0.5,memory=1Gi,ephemeral-storage=1Gi --system-reserved cpu=250m,memory=500Mi  --runtime-cgroups=/systemd/system.slice --kubelet-cgroups=/systemd/system.slice"
+
+- name: restart kubelet
+  service:
+    name: kubelet
+    state: restarted
+    enabled: true

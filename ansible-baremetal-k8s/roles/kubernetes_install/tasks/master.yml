@@ -1,0 +1,62 @@
+---
+- name: Template kubeadm file
+  template:
+    src: kubeadm.yml.j2
+    dest: /etc/kubernetes/kubeadm.yml
+
+- name: kubeadm | Initialize first master
+  command: >-
+    timeout -k 300s 300s
+    kubeadm init
+    --config=/etc/kubernetes/kubeadm.yml
+    --upload-certs
+    --v=5
+  register: kubeadm_init
+  any_errors_fatal: true
+  # Retry is because upload config sometimes fails
+  retries: 3
+  until: kubeadm_init is succeeded or "field is immutable" in kubeadm_init.stderr
+  failed_when: kubeadm_init.rc != 0 and "field is immutable" not in kubeadm_init.stderr
+
+- name: Create kubeadm token for joining nodes with 24h expiration (default)
+  command: "kubeadm --kubeconfig /etc/kubernetes/admin.conf token create"
+  changed_when: false
+  register: temp_token
+  retries: 5
+  delay: 5
+  until: temp_token is succeeded
+
+- name: Create kubeadm token for joining control plane nodes with 2h expiration (default)
+  command: "kubeadm init phase upload-certs --upload-certs"
+  changed_when: false
+  register: temp_plane_token
+  retries: 5
+  delay: 5
+  until: temp_plane_token is succeeded
+
+- name: Calculate the CA Certificate Hash for Kubeadm
+  shell: "openssl x509 -in /etc/kubernetes/pki/ca.crt -pubkey -noout | openssl pkey -pubin -outform DER | openssl dgst -sha256 | cut -d ' ' -f2"
+  changed_when: false
+  register: temp_ca_cert_hash
+  retries: 5
+  delay: 5
+  until: temp_ca_cert_hash is succeeded
+
+- name: Set kubeadm_token
+  set_fact:
+    kubeadm_token: "{{ temp_token.stdout }}"
+  when: temp_token.stdout is defined
+
+- name: Set control_plane_token
+  set_fact:
+    control_plane_token: "{{ temp_plane_token.stdout.split(' ')[-1] }}"
+  when: temp_plane_token.stdout is defined
+
+- name: Set ca-cert-hash
+  set_fact:
+    ca_cert_hash: "{{ temp_ca_cert_hash.stdout }}"
+  when: temp_ca_cert_hash.stdout is defined
+
+- debug: var=kubeadm_token
+- debug: var=ca_cert_hash
+- debug: var=control_plane_token

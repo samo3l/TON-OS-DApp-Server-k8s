@@ -1,0 +1,12 @@
+---
+- name: Joining node to the cluster.
+  shell: >-
+    timeout -k 300s 300s
+    kubeadm join
+    {{ control_plane_endpoint | default(hostvars[groups['kube-master'][0]]['ansible_default_ipv4']['address']) }}:{{ control_plane_port }}
+    --discovery-token-ca-cert-hash sha256:{{ hostvars[groups['kube-master'][0]]['ca_cert_hash'] }}
+    --token {{ hostvars[groups['kube-master'][0]]['kubeadm_token'] }}
+    --v=5
+  register: kubeadm_join_node
+  retries: 3
+  until: kubeadm_join_node is succeeded

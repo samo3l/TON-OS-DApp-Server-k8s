@@ -1,0 +1,25 @@
+---
+- name: restart systemd-modules-load
+  service:
+    name: systemd-modules-load
+    state: restarted
+
+
+- name: start rpcbind
+  service:
+    name: rpcbind
+    state: started
+    enabled: true
+
+- name: start nfslock
+  service:
+    name: nfslock
+    state: started
+    enabled: true
+
+- name: start nfslock
+  service:
+    name: rpc-statd
+    state: started
+    enabled: true
+

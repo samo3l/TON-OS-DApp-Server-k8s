@@ -1,0 +1,7 @@
+---
+- name: Add the kernel modules
+  modprobe:
+    name: '{{ item }}'
+    state: present
+  with_items:
+    - '{{ modules }}'
