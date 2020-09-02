@@ -998,6 +998,11 @@ terraform apply
 terraform destroy
 ```
 
+### Bare metal Kubernetes installation
+
+1. Navigate to ansible-baremetal-k8s
+2. Run ansible-playbook command (see readme in ansible dir)
+
 ## Logging 
 
 Graylog stable helm chart is included in node_install script and will be installed automatically.
