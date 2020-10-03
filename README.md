@@ -112,7 +112,7 @@ Terraform-vpc-eks directory contains Terraform scripts to deploy VPC and EKS (Ku
 
 ### Variables
 
-To customize variables for TON OS DApp Server components, just open helm/charts/_&lt;component_name>_/variables.yaml. 
+To customize variables for TON OS DApp Server components, just open helm/charts/_&lt;component_name>_/values.yaml. 
 
 **NOTE**: Default values also can be found there.
 
